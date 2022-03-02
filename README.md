@@ -12,4 +12,3 @@ The chapters will include various programming langauges, both for my enjoyment a
 
 1. Python
 2. Go
-3. 
