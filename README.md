@@ -6,7 +6,7 @@ The idea is that you can use this repository as a companion as you work through 
 
 I will include a readme in each chapter's folder to provide details of how to use the code included therein.
 
-The chapters will include various programming langauges, both for my enjoyment and for learning purposes. Some algorithms and data structures are trivial in some languages. For instance, a list in python is redundant, while a list in C is interesting.
+The chapters will include various programming langauges, both for my enjoyment and for learning purposes. Some algorithms and data structures are trivial in some languages. For instance, a list in python is redundant, while a list in C is interesting. We will prefer the interesting implementation.
 
 ## Things you will need
 
