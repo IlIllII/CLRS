@@ -1,6 +1,6 @@
-# Chapter 2
+# Chapter 4
 
-This folder contains tests for all the algorithms mentioned in chapter 2, which is an introductory chapter and includes a fun collection of simple algorithms. All tests are written in Go.
+This folder contains tests for all the algorithms mentioned in chapter 4, which is about divide-and-conquer. All tests are written in Go.
 
 I have stubbed out functions for all the algorithms in `algorithms.go`. This file is where you will write your implementations of the algorithms from the chapter. I have written tests for them in `algorithms_test.go`.
 
