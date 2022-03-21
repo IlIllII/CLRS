@@ -1,4 +1,4 @@
-package ch2
+package ch4
 
 // Brute Force Maximum subarray - 4.1 in-chapter algo & Ex 4.1-2
 //
