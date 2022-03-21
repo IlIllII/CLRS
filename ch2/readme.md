@@ -20,4 +20,4 @@ Where XXX is the name of the function you want to test.
 
 You can look at the tests in `algorithms_test.go` to learn more about what the input and output look like for each function. Feel free to add new test cases if you run into edge cases that are not covered by the test suite.
 
-If you get stuck, you can also view my solutions which can be found in `answers.go`. Note: I use an underbar prefix for the answer functions, so avoid using this naming convention when writing your helper functions
+If you get stuck, you can also view my solutions which can be found in `answers.go`. Note: I use an underbar prefix for the answer functions, so avoid using this naming convention when writing your helper functions.
