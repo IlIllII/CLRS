@@ -268,3 +268,237 @@ func LinearTimeMaximumSubarray(arr []int) []int {
 
 	return arr[maxStart : maxEnd+2]
 }
+
+// Theta(n^3) approach to matrix multiplication 4.2 in chapter algorithm
+//
+// This is the first approach to matrix multiplation and uses a simple
+// triply nested loop.
+//
+// You can assume that all inputs are square matrices.
+//
+// Ex: [[1, 0], [0, 1]]
+func BasicMatrixMultiply(A, B [][]int) [][]int {
+	n := len(A)
+	C := [][]int{}
+	for i := 0; i < n; i++ {
+		CRow := []int{}
+		for j := 0; j < n; j++ {
+			c := 0
+			for k := 0; k < n; k++ {
+				c += A[i][k] * B[k][j]
+			}
+			CRow = append(CRow, c)
+		}
+		C = append(C, CRow)
+	}
+
+	return C
+}
+
+// 4.2 in-chapter algorithm : Recursive divide and conquer approach to
+// matrix multiplication. Theta(n^3).
+//
+// You can assume that input matrices are square matrices with
+// dimensions that are powers of two.
+func DivideAndConquerMatMul(A, B [][]int) [][]int {
+	n := len(A)
+	C := makeMat(2 * n)
+
+	// Base case
+	if n == 1 {
+		C[0][0] = A[0][0] * B[0][0]
+		return C
+	}
+
+	// Partition Matrices
+	A11 := makeMat(n)
+	A12 := makeMat(n)
+	A21 := makeMat(n)
+	A22 := makeMat(n)
+	B11 := makeMat(n)
+	B12 := makeMat(n)
+	B21 := makeMat(n)
+	B22 := makeMat(n)
+	for i := 0; i < n/2; i++ {
+		for j := 0; j < n/2; j++ {
+			A11[i][j] = A[i][j]
+			A12[i][j] = A[i][j+n/2]
+			A21[i][j] = A[i+n/2][j]
+			A22[i][j] = A[i+n/2][j+n/2]
+			B11[i][j] = B[i][j]
+			B12[i][j] = B[i][j+n/2]
+			B21[i][j] = B[i+n/2][j]
+			B22[i][j] = B[i+n/2][j+n/2]
+		}
+	}
+
+	// Compute submatrices
+	C11 := matAdd(DivideAndConquerMatMul(A11, B11), DivideAndConquerMatMul(A12, B21))
+	C12 := matAdd(DivideAndConquerMatMul(A11, B12), DivideAndConquerMatMul(A12, B22))
+	C21 := matAdd(DivideAndConquerMatMul(A21, B11), DivideAndConquerMatMul(A22, B21))
+	C22 := matAdd(DivideAndConquerMatMul(A21, B12), DivideAndConquerMatMul(A22, B22))
+
+	combineSubMatrices(C, C11, C12, C21, C22, n)
+	return C
+}
+
+func matAdd(A, B [][]int) [][]int {
+	n := len(A)
+	C := makeMat(2 * n)
+	for i := 0; i < n; i++ {
+		for j := 0; j < n; j++ {
+			C[i][j] = A[i][j] + B[i][j]
+		}
+	}
+	return C
+}
+
+func matSub(A, B [][]int) [][]int {
+	n := len(A)
+	C := makeMat(2 * n)
+	for i := 0; i < n; i++ {
+		for j := 0; j < n; j++ {
+			C[i][j] = A[i][j] - B[i][j]
+		}
+	}
+	return C
+}
+
+func makeMat(n int) [][]int {
+	C := make([][]int, n/2)
+	for i := range C {
+		C[i] = make([]int, n/2)
+	}
+	return C
+}
+
+func combineSubMatrices(C, C11, C12, C21, C22 [][]int, n int) {
+	for i := 0; i < n/2; i++ {
+		for j := 0; j < n/2; j++ {
+			C[i][j] += C11[i][j]
+			C[i][j+n/2] += C12[i][j]
+			C[i+n/2][j] += C21[i][j]
+			C[i+n/2][j+n/2] += C22[i][j]
+		}
+	}
+}
+
+// 4.2 in-chapter algo & ex 4.2-2
+//
+// Strassen's method for matrix multiplication.
+//
+// As above, assume square matrices with dimensions that are
+// power's of two.
+func StrassenMatMul(A, B [][]int) [][]int {
+	n := len(A)
+	C := makeMat(2 * n)
+
+	// Base case
+	if n == 1 {
+		C[0][0] = A[0][0] * B[0][0]
+		return C
+	}
+
+	// Partition Matrices
+	A11 := makeMat(n)
+	A12 := makeMat(n)
+	A21 := makeMat(n)
+	A22 := makeMat(n)
+	B11 := makeMat(n)
+	B12 := makeMat(n)
+	B21 := makeMat(n)
+	B22 := makeMat(n)
+	for i := 0; i < n/2; i++ {
+		for j := 0; j < n/2; j++ {
+			A11[i][j] = A[i][j]
+			A12[i][j] = A[i][j+n/2]
+			A21[i][j] = A[i+n/2][j]
+			A22[i][j] = A[i+n/2][j+n/2]
+			B11[i][j] = B[i][j]
+			B12[i][j] = B[i][j+n/2]
+			B21[i][j] = B[i+n/2][j]
+			B22[i][j] = B[i+n/2][j+n/2]
+		}
+	}
+
+	S1 := matSub(B12, B22)
+	S2 := matAdd(A11, A12)
+	S3 := matAdd(A21, A22)
+	S4 := matSub(B21, B11)
+	S5 := matAdd(A11, A22)
+	S6 := matAdd(B11, B22)
+	S7 := matSub(A12, A22)
+	S8 := matAdd(B21, B22)
+	S9 := matSub(A11, A21)
+	S10 := matAdd(B11, B12)
+
+	P1 := StrassenMatMul(A11, S1)
+	P2 := StrassenMatMul(S2, B22)
+	P3 := StrassenMatMul(S3, B11)
+	P4 := StrassenMatMul(A22, S4)
+	P5 := StrassenMatMul(S5, S6)
+	P6 := StrassenMatMul(S7, S8)
+	P7 := StrassenMatMul(S9, S10)
+
+	// Compute submatrices
+	C11 := matSub(matAdd(P5, matAdd(P4, P6)), P2)
+	C12 := matAdd(P1, P2)
+	C21 := matAdd(P3, P4)
+	C22 := matSub(matSub(matAdd(P5, P1), P3), P7)
+
+	combineSubMatrices(C, C11, C12, C21, C22, n)
+	return C
+}
+
+// Ex 4.2-3 Strassen's with any n
+//
+// You should not assume that input matrices have dimensions that are
+// powers of 2, but you can assume they are still square.
+func GeneralStrassenMatMul(A, B [][]int) [][]int {
+	n := len(A)
+	wasAdjusted := false
+	if !isPowerOfTwo(n) {
+		wasAdjusted = true
+		m := nextPowerOfTwo(len(A))
+		for i := 0; i < n; i++ {
+			for j := n; j < m; j++ {
+				A[i] = append(A[i], 0)
+				B[i] = append(B[i], 0)
+			}
+		}
+		for i := n; i < m; i++ {
+			newRow1 := []int{}
+			newRow2 := []int{}
+			for j := 0; j < m; j++ {
+				newRow1 = append(newRow1, 0)
+				newRow2 = append(newRow2, 0)
+			}
+			A = append(A, newRow1)
+			B = append(B, newRow2)
+		}
+	}
+
+	C := StrassenMatMul(A, B)
+
+	if wasAdjusted {
+		for i := 0; i < n; i++ {
+			C[i] = C[i][:n]
+		}
+		C = C[:n]
+	}
+
+	return C
+}
+
+func isPowerOfTwo(x int) bool {
+	return x&(x-1) == 0 && x != 0
+}
+
+func nextPowerOfTwo(x int) int {
+	x |= x >> 1
+	x |= x >> 2
+	x |= x >> 4
+	x |= x >> 8
+	x |= x >> 16
+	return (x - (x >> 1)) * 2
+}
