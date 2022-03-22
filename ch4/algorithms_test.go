@@ -130,6 +130,28 @@ func TestGeneralStrassens(t *testing.T) {
 	}
 }
 
+func TestComplexMult(t *testing.T) {
+	a, b := ComplexMult(1, 2, 3, 4)
+	if a != -5 && b != 2 {
+		t.Errorf("Expected: %v, %v; Got: %v, %v", -5, 2, a, b)
+	}
+
+	a, b = ComplexMult(0, 0, 0, 0)
+	if a != 0 && b != 0 {
+		t.Errorf("Expected: %v, %v; Got: %v, %v", 0, 0, a, b)
+	}
+
+	a, b = ComplexMult(10, 10, 10, 10)
+	if a != 0 && b != 0 {
+		t.Errorf("Expected: %v, %v; Got: %v, %v", 0, 0, a, b)
+	}
+
+	a, b = ComplexMult(10, 1, 5, 10)
+	if a != 40 && b != 95 {
+		t.Errorf("Expected: %v, %v; Got: %v, %v", 40, 95, a, b)
+	}
+}
+
 // * Helpers
 
 type matmulTest struct {

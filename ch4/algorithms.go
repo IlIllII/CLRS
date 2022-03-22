@@ -502,3 +502,17 @@ func nextPowerOfTwo(x int) int {
 	x |= x >> 16
 	return (x - (x >> 1)) * 2
 }
+
+// Ex 4.2-7 Complex number multiplication.
+//
+// Show how to multiply the complex numbers a + bi and c + di using
+// only three multiplications of real numbers. The algorithm should
+// take a, b, c, and d as input and produce the real component
+// ac - bd and the imaginary component ad - bc separately.
+func ComplexMult(a, b, c, d int) (int, int) {
+	// ac - bd, ad + bc
+	ac_bc := (a + b) * c
+	bc_bd := b * (c + d)
+	ad_bd := (a - b) * d
+	return ac_bc - bc_bd, bc_bd + ad_bd
+}
