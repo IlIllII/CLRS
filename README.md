@@ -12,7 +12,7 @@ The book is divided into 8 parts, with each part containing some number of chapt
 2. Sorting and Order Statistics
 3. Data Structures
 4. Advanced Design and Analysis Techniques
-5. Advanced Data Strctures
+5. Advanced Data Structures
 6. Graph Algorithms
 7. Selected Topics
 8. Appendix: Mathematical background

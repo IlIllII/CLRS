@@ -8,4 +8,4 @@ Part 1 includes the following chapters:
 - Ch4 - Divide and Conquer
 - Ch5 - Probabilistic Analysis and Randomized Algorithms
 
-You can find instructions for the code for each chapter in the readme inside each chapter folder.
+You can find instructions for the code for each chapter in the readme inside each folder.
