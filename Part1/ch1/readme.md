@@ -2,7 +2,7 @@
 
 This chapter didn't have any algorithms but it did have a few warmup exercises you can do with a pencil and paper.
 
-I plotted a couple visualizations using python to demonstrate orders of growth. Simply navigate to this directory in your terminal and run the scripts:
+I plotted a couple visualizations using python to demonstrate orders of growth. Navigate to this directory in your terminal and run the scripts:
 
 ```bash
 py e1-2-2.py; py e1-2-3.py
