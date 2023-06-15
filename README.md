@@ -18,5 +18,3 @@ The book is divided into 8 parts, with each part containing some number of chapt
 8. Appendix: Mathematical background
 
 Inside each part's folder you can find a readme outlining the chapters covered as well as individual chapter folders. Inside of each chapter folder is another readme that provides instructions for using the code included therein.
-
-The chapters will include various programming langauges, both for my enjoyment and for learning purposes. Some algorithms and data structures are trivial in some languages. For instance, a list in python is redundant, while a list in C is interesting. We will prefer the interesting implementation.
